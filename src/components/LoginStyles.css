@@ -1,0 +1,85 @@
+/* General Page Styles */
+.login-page {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to bottom right, #75b0ca, #ffffff);
+}
+
+.login-container {
+    background-color: #131c20;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+.login-title {
+    color: white;
+    margin-bottom: 1rem;
+}
+
+/* Form Styles */
+.login-form .form-group {
+    margin-bottom: 1rem;
+}
+
+.login-form input {
+    padding: 0.75rem;
+    font-size: 1rem;
+}
+
+.login-form label {
+    color: white;
+    margin-bottom: 0.5rem;
+}
+
+.forgot-password {
+    display: block;
+    margin-top: 0.5rem;
+    color: #446675;
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+/* Button Styles */
+.login-btn {
+    background-color: #446675;
+    border-color: #446675;
+    color: white;
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1.25rem;
+    cursor: pointer;
+}
+
+.login-btn:hover {
+    background-color: #75b0ca;
+    border-color: #75b0ca;
+}
+
+/* Add specific styles for the EditTemplate page */
+.edit-template-page {
+    background: linear-gradient(to bottom right, #75b0ca, #ffffff);
+    min-height: 100vh;
+}
+
+.card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.text-white h3 {
+    color: white;
+}
+
+.texte_invisible {
+    color : #212529;
+}
