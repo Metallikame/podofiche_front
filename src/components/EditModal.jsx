@@ -2,34 +2,31 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { BASE_URL } from '../tools/constante';
+import PropTypes from 'prop-types';
 
 const EditModal = ({ show, handleClose, template, refreshData }) => {
     const [modifiedTemplate, setModifiedTemplate] = useState('');
 
-    // Mettre à jour le state quand le template change
     useEffect(() => {
         if (template) {
             setModifiedTemplate(template.template);
         }
     }, [template]);
 
-    // Gère la modification du textarea
     const handleChange = (e) => {
         setModifiedTemplate(e.target.value);
     };
 
-    // Gère la sauvegarde des modifications
     const handleSave = () => {
         if (template) {
-            // Requête PUT ou PATCH pour mettre à jour le template dans la BDD
             axios.put(`${BASE_URL}/api/typeconsultations/${template.typeConsultationId}`, {
                 ...template,
-                template: modifiedTemplate, // Met à jour seulement le champ template
+                template: modifiedTemplate,
             })
                 .then(response => {
                     console.log('Template mis à jour avec succès:', response.data);
-                    handleClose(); // Fermer la modale après la sauvegarde
-                    refreshData();  // Actualiser les données après la sauvegarde
+                    handleClose();
+                    refreshData();
                 })
                 .catch(error => {
                     console.error('Erreur lors de la mise à jour du template:', error);
@@ -43,7 +40,6 @@ const EditModal = ({ show, handleClose, template, refreshData }) => {
                 <Modal.Title>Modifier le Template</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                {/* Affiche le textarea seulement si un template est sélectionné */}
                 {template ? (
                     <div>
                         <label htmlFor="templateTextArea">Contenu du Template :</label>
@@ -66,13 +62,24 @@ const EditModal = ({ show, handleClose, template, refreshData }) => {
                 <Button
                     variant="primary"
                     disabled={!template}
-                    onClick={handleSave}  // Appelle la fonction pour sauvegarder
+                    onClick={handleSave}
                 >
                     Enregistrer les modifications
                 </Button>
             </Modal.Footer>
         </Modal>
     );
+};
+
+EditModal.propTypes = {
+    show: PropTypes.bool.isRequired,
+    handleClose: PropTypes.func.isRequired,
+    refreshData: PropTypes.func.isRequired,
+    template: PropTypes.shape({
+        template: PropTypes.string,
+        typeConsultationId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+        // Ajoute d'autres champs si besoin !
+    }),
 };
 
 export default EditModal;

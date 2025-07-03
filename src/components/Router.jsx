@@ -22,20 +22,17 @@ const Router = () => {
                         </PrivateRoute>
                     }
                 />
-                {/* Map user routes */}
-                {routesUser.map(({path, auth, component}, i) => {
-                    return (
-                        <Route
-                            key={i}
-                            path={path}
-                            element={
-                                <PrivateRoute auth={auth}>
-                                    {component}
-                                </PrivateRoute>
-                            }
-                        />
-                    )
-                })}
+                {routesUser.map(({path, auth, component}) => (
+                    <Route
+                        key={path}
+                        path={path}
+                        element={
+                            <PrivateRoute auth={auth}>
+                                {component}
+                            </PrivateRoute>
+                        }
+                    />
+                ))}
             </Route>
 
             <Route path="/" element={<LayerHome/>}>
@@ -47,20 +44,17 @@ const Router = () => {
                         </PrivateRoute>
                     }
                 />
-                {/* Map home routes */}
-                {routesHome.map(({path, auth, component}, i) => {
-                    return (
-                        <Route
-                            key={i}
-                            path={path}
-                            element={
-                                <PrivateRoute auth={auth}>
-                                    {component}
-                                </PrivateRoute>
-                            }
-                        />
-                    )
-                })}
+                {routesHome.map(({path, auth, component}) => (
+                    <Route
+                        key={path}
+                        path={path}
+                        element={
+                            <PrivateRoute auth={auth}>
+                                {component}
+                            </PrivateRoute>
+                        }
+                    />
+                ))}
             </Route>
         </Routes>
     );

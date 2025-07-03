@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
-import {Modal, Button} from 'react-bootstrap';
-import axios from 'axios';
+import React from 'react';
+import PropTypes from 'prop-types';
+import {Button, Modal} from "react-bootstrap";
 import {BASE_URL} from '../tools/constante';
+import axios from "axios";
 
 const TemplateBlock = ({typeConsultationListe, onModify, refreshData}) => {
     const [selectedTemplateId, setSelectedTemplateId] = useState(''); // ID pour modification
@@ -76,14 +77,12 @@ const TemplateBlock = ({typeConsultationListe, onModify, refreshData}) => {
         <div className="col-md-6 mb-4">
             <div className="card bg-dark text-white p-3">
                 <h3>Editeur de templates</h3>
-
-                {/* Sélecteur pour modifier un template */}
                 <div className="mt-4">
                     <h5>Modifier un Template existant</h5>
                     <select onChange={(e) => setSelectedTemplateId(e.target.value)} className="form-select mt-3">
                         <option value="">Sélectionnez un Template à modifier</option>
-                        {typeConsultationListe.map((item, index) => (
-                            <option key={index} value={item.typeConsultationId}>
+                        {typeConsultationListe.map((item) => (
+                            <option key={item.typeConsultationId} value={item.typeConsultationId}>
                                 {item.libelleConsultation}
                             </option>
                         ))}
@@ -92,16 +91,12 @@ const TemplateBlock = ({typeConsultationListe, onModify, refreshData}) => {
                         Modifier
                     </button>
                 </div>
-
-                {/* Bouton pour créer un nouveau template */}
                 <div className="mt-4">
                     <h5>Créer un Nouveau Template</h5>
                     <button className="btn btn-success mt-3 w-100" onClick={handleOpenCreateModal}>
                         Créer
                     </button>
                 </div>
-
-                {/* Sélecteur pour supprimer un template */}
                 <div className="mt-4">
                     <h5>Supprimer un Template</h5>
                     <select
@@ -110,8 +105,8 @@ const TemplateBlock = ({typeConsultationListe, onModify, refreshData}) => {
                         onChange={(e) => setDeleteTemplateId(e.target.value)}
                     >
                         <option value="">Sélectionnez un Template à supprimer</option>
-                        {typeConsultationListe.map((item, index) => (
-                            <option key={index} value={item.typeConsultationId}>
+                        {typeConsultationListe.map((item) => (
+                            <option key={item.typeConsultationId} value={item.typeConsultationId}>
                                 {item.libelleConsultation}
                             </option>
                         ))}
@@ -119,13 +114,12 @@ const TemplateBlock = ({typeConsultationListe, onModify, refreshData}) => {
                     <button
                         className="btn btn-danger mt-3 w-100"
                         onClick={handleOpenDeleteModal}
-                        disabled={!deleteTemplateId} // Désactive si rien n'est sélectionné
+                        disabled={!deleteTemplateId}
                     >
                         Supprimer
                     </button>
                 </div>
             </div>
-
             {/* Modale de création de template */}
             <Modal show={showCreateModal} onHide={() => setShowCreateModal(false)}>
                 <Modal.Header closeButton>
@@ -178,6 +172,17 @@ const TemplateBlock = ({typeConsultationListe, onModify, refreshData}) => {
             </Modal>
         </div>
     );
+};
+
+TemplateBlock.propTypes = {
+    typeConsultationListe: PropTypes.arrayOf(
+        PropTypes.shape({
+            typeConsultationId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+            libelleConsultation: PropTypes.string.isRequired,
+        })
+    ).isRequired,
+    onModify: PropTypes.func.isRequired,
+    refreshData: PropTypes.func.isRequired,
 };
 
 export default TemplateBlock;
