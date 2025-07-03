@@ -80,6 +80,20 @@ const EditTemplate = () => {
         });
     };
 
+    const handleChange = (e) => {
+        setTextareaContent(e.target.value);
+    };
+
+    const refreshData = () => {
+        setIsLoading(true);
+        axios.get(`${BASE_URL}/api/typeconsultations`, {
+            headers: {'Access-Control-Allow-Origin': 'http://localhost:3000'}
+        })
+            .then(response => setTypeConsultationListe(response.data))
+            .catch(error => console.log(error))
+            .finally(() => setIsLoading(false));
+    };
+
     const downloadPDF = () => {
         const doc = new jsPDF({
             orientation: 'portrait',
