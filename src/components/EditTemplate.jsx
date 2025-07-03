@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Header from "./Header.jsx";
-import { BASE_URL } from "../tools/constante";
+import {BASE_URL} from "../tools/constante";
 import axios from 'axios';
 import TemplateBlock from './TemplateBlock.jsx';
-// import PatientBlock from './PatientBlock.jsx';
 import EditModal from './EditModal.jsx';
-import { jsPDF } from "jspdf";
+import {jsPDF} from "jspdf";
 
 const EditTemplate = () => {
     const [typeConsultationListe, setTypeConsultationListe] = useState([]);
-    // const [patientsList, setPatientsList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
     const [selectedTemplate, setSelectedTemplate] = useState(null);
@@ -57,37 +55,26 @@ const EditTemplate = () => {
         setSelectedTemplate(null);
     };
 
-    const refreshData = () => {
-        setIsLoading(true);
-        axios.get(`${BASE_URL}/api/typeconsultations`, {
-            headers: {'Access-Control-Allow-Origin': 'http://localhost:3000'}
-        })
-            .then(response => setTypeConsultationListe(response.data))
-            .catch(error => console.log(error))
-            .finally(() => setIsLoading(false));
+    const updateTextareaContentOnRemove = (templateContent) => (prevContent) => {
+        return prevContent
+            .split('\n')
+            .filter(line => line.trim() !== templateContent.trim())
+            .join('\n')
+            .trim();
     };
 
-    const handleChange = (e) => {
-        setTextareaContent(e.target.value);
-    };
+    const updateTextareaContentOnAdd = (templateContent) => (prevContent) =>
+        prevContent ? `${prevContent}\n${templateContent}` : templateContent;
 
     const handleCheckboxChange = (templateId, templateContent) => {
         setSelectedTemplates(prev => {
             const updatedSelection = {...prev};
             if (updatedSelection[templateId]) {
                 delete updatedSelection[templateId];
-                // Remove the templateContent from textarea and trim it
-                setTextareaContent(prevContent => {
-                    const newContent = prevContent
-                        .split('\n')
-                        .filter(line => line.trim() !== templateContent.trim())
-                        .join('\n')
-                        .trim();
-                    return newContent;
-                });
+                setTextareaContent(updateTextareaContentOnRemove(templateContent));
             } else {
                 updatedSelection[templateId] = templateContent;
-                setTextareaContent(prevContent => prevContent ? `${prevContent}\n${templateContent}` : templateContent);
+                setTextareaContent(updateTextareaContentOnAdd(templateContent));
             }
             return updatedSelection;
         });
@@ -119,7 +106,7 @@ const EditTemplate = () => {
             month: 'long',
             day: 'numeric',
         });
-        doc.text(`Orvault, le ${today}`, rightMargin, 20, { align: 'right' });
+        doc.text(`Orvault, le ${today}`, rightMargin, 20, {align: 'right'});
 
         // Add a line break after header
         let currentY = 50;
@@ -128,7 +115,7 @@ const EditTemplate = () => {
         doc.setFontSize(12);
         const splitText = doc.splitTextToSize(textareaContent, contentWidth); // Automatically split text into lines
         splitText.forEach((line, index) => {
-            doc.text(line, leftMargin, currentY, { align: 'justify' });
+            doc.text(line, leftMargin, currentY, {align: 'justify'});
             currentY += lineSpacing;
         });
 
@@ -147,7 +134,7 @@ const EditTemplate = () => {
 
     return (
         <div className="edit-template-page">
-            <Header />
+            <Header/>
             <div className="container mt-4">
                 <h1 className="text-center text-white">Éditer un Template</h1>
                 <div className="row mt-5 justify-content-between">

@@ -1,8 +1,8 @@
-// CreateModal.jsx
 import React, {useState} from 'react';
 import {Modal, Button} from 'react-bootstrap';
 import axios from 'axios';
 import {BASE_URL} from '../tools/constante';
+import PropTypes from 'prop-types';
 
 const CreateModal = ({show, handleClose, refreshData}) => {
     const [libelle, setLibelle] = useState('');
@@ -62,6 +62,12 @@ const CreateModal = ({show, handleClose, refreshData}) => {
             </Modal.Footer>
         </Modal>
     );
+};
+
+CreateModal.propTypes = {
+    show: PropTypes.bool.isRequired,
+    handleClose: PropTypes.func.isRequired,
+    refreshData: PropTypes.func.isRequired,
 };
 
 export default CreateModal;

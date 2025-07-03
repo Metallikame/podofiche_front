@@ -1,5 +1,6 @@
 import React from 'react';
 import {Button} from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 const PatientBlock = ({patientsList}) => {
     return (
@@ -7,8 +8,8 @@ const PatientBlock = ({patientsList}) => {
             <div className="card bg-dark text-white p-3">
                 <h3>Choisir un Patient</h3>
                 <select className="form-select mt-3">
-                    {patientsList.map((patient, index) => (
-                        <option key={index} value={patient.id}>
+                    {patientsList.map((patient) => (
+                        <option key={patient.id} value={patient.id}>
                             {patient.numeroSecu}
                         </option>
                     ))}
@@ -21,6 +22,15 @@ const PatientBlock = ({patientsList}) => {
             </div>
         </div>
     );
+};
+
+PatientBlock.propTypes = {
+    patientsList: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+            numeroSecu: PropTypes.string.isRequired,
+        })
+    ).isRequired,
 };
 
 export default PatientBlock;
