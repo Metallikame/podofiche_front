@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {Button, Modal} from "react-bootstrap";
 import {BASE_URL} from '../tools/constante';
 import axios from "axios";
+import './TemplateBlock.css';
 
 const TemplateBlock = ({typeConsultationListe, onModify, refreshData}) => {
     const [selectedTemplateId, setSelectedTemplateId] = useState(''); // ID pour modification
@@ -74,52 +75,59 @@ const TemplateBlock = ({typeConsultationListe, onModify, refreshData}) => {
     };
 
     return (
-        <div className="col-md-6 mb-4">
-            <div className="card bg-dark text-white p-3">
-                <h3>Editeur de templates</h3>
-                <div className="mt-4">
-                    <h5>Modifier un Template existant</h5>
-                    <select onChange={(e) => setSelectedTemplateId(e.target.value)} className="form-select mt-3">
-                        <option value="">Sélectionnez un Template à modifier</option>
-                        {typeConsultationListe.map((item) => (
-                            <option key={item.typeConsultationId} value={item.typeConsultationId}>
-                                {item.libelleConsultation}
-                            </option>
-                        ))}
-                    </select>
-                    <button className="btn btn-primary mt-3 w-100" onClick={handleModifyClick}>
-                        Modifier
-                    </button>
-                </div>
-                <div className="mt-4">
-                    <h5>Créer un Nouveau Template</h5>
-                    <button className="btn btn-success mt-3 w-100" onClick={handleOpenCreateModal}>
-                        Créer
-                    </button>
-                </div>
-                <div className="mt-4">
-                    <h5>Supprimer un Template</h5>
-                    <select
-                        className="form-select mt-2"
-                        value={deleteTemplateId}
-                        onChange={(e) => setDeleteTemplateId(e.target.value)}
-                    >
-                        <option value="">Sélectionnez un Template à supprimer</option>
-                        {typeConsultationListe.map((item) => (
-                            <option key={item.typeConsultationId} value={item.typeConsultationId}>
-                                {item.libelleConsultation}
-                            </option>
-                        ))}
-                    </select>
-                    <button
-                        className="btn btn-danger mt-3 w-100"
-                        onClick={handleOpenDeleteModal}
-                        disabled={!deleteTemplateId}
-                    >
-                        Supprimer
-                    </button>
-                </div>
+        <div className="card-modern">
+            <h2>Éditeur de templates</h2>
+
+            {/* Modification */}
+            <div className="mb-4">
+                <div className="mb-2 fw-semibold text-secondary">Modifier un Template existant</div>
+                <select
+                    onChange={(e) => setSelectedTemplateId(e.target.value)}
+                    className="form-select mb-3"
+                    value={selectedTemplateId}
+                >
+                    <option value="">Sélectionnez un Template à modifier</option>
+                    {typeConsultationListe.map((item) => (
+                        <option key={item.typeConsultationId} value={item.typeConsultationId}>
+                            {item.libelleConsultation}
+                        </option>
+                    ))}
+                </select>
+                <button className="btn btn-primary w-100 mb-3 btn-lg" onClick={handleModifyClick}>
+                    Modifier
+                </button>
             </div>
+
+            {/* Création */}
+            <div className="mb-4">
+                <div className="mb-2 fw-semibold text-secondary">Créer un Nouveau Template</div>
+                <button className="btn btn-success w-100 btn-lg" onClick={handleOpenCreateModal}>
+                    Créer
+                </button>
+            </div>
+
+            {/* Suppression */}
+            <div className="mb-2 fw-semibold text-secondary">Supprimer un Template</div>
+            <select
+                className="form-select mb-3"
+                value={deleteTemplateId}
+                onChange={(e) => setDeleteTemplateId(e.target.value)}
+            >
+                <option value="">Sélectionnez un Template à supprimer</option>
+                {typeConsultationListe.map((item) => (
+                    <option key={item.typeConsultationId} value={item.typeConsultationId}>
+                        {item.libelleConsultation}
+                    </option>
+                ))}
+            </select>
+            <button
+                className="btn btn-danger w-100 btn-lg"
+                onClick={handleOpenDeleteModal}
+                disabled={!deleteTemplateId}
+            >
+                Supprimer
+            </button>
+
             {/* Modale de création de template */}
             <Modal show={showCreateModal} onHide={() => setShowCreateModal(false)}>
                 <Modal.Header closeButton>

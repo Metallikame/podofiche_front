@@ -1,0 +1,100 @@
+body,
+.edit-template-page {
+    min-height: 100vh;
+    background: linear-gradient(120deg, #c1e0fc 0%, #d6e6f2 100%);
+}
+
+.main-flex-container {
+    min-height: 100vh;
+}
+
+/* Card moderne unique, pour tout */
+.card-modern, .template-card {
+    background: rgba(255, 255, 255, 0.90);
+    border-radius: 2em;
+    box-shadow: 0 4px 36px 0 rgba(49, 115, 153, 0.10), 0 2px 8px 0 rgba(0, 0, 0, 0.03);
+    padding: 2.3em 2em 2em 2em;
+    margin: 2em auto 0 auto;
+    max-width: 400px;
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: box-shadow 0.2s;
+    border: 1.5px solid #e6f3fd;
+}
+
+@media (max-width: 600px) {
+    .card-modern {
+        padding: 1.2em 0.6em 1.2em 0.6em;
+        max-width: 96vw;
+    }
+}
+
+/* Preview A4 = simple feuille blanche fidèle au format et ratio de la zone texte du PDF */
+.a4-preview {
+    width: 100%;
+    max-width: 680px; /* Zone texte A4 utile en px à 96dpi ≈ 170mm */
+    aspect-ratio: 170/140; /* Ratio fidèle à la zone texte réelle (pas toute la feuille, mais la zone "bandeau + texte") */
+    background: #fff;
+    border-radius: 1.3em;
+    box-shadow: 0 2px 16px 0 rgba(49,115,153,0.07);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin: 0 auto 1.3em auto;
+    border: 2.2px solid #d4e6f7;
+    overflow: hidden;
+    padding: 0;
+}
+
+/* Textarea bien intégrée dans la preview (prend 100% de la zone) */
+.cr-textarea {
+    border-radius: 1.1em;
+    border: 1.2px solid #dbeafe;
+    background: rgba(255,255,255,0.93);
+    padding: 1em 1.2em;
+    font-size: 1.08em;
+    height: 100%; /* Prend toute la hauteur de la preview */
+    width: 100%;
+    resize: none; /* pour éviter qu'on sorte du format ! */
+    box-shadow: none;
+    outline: none;
+    min-height: 0;
+    max-height: none;
+}
+
+@media (max-width: 991.98px) {
+    .row.flex-lg-row {
+        flex-direction: column-reverse !important;
+    }
+    .a4-preview {
+        max-width: 98vw;
+        border-radius: 0.9em;
+        min-width: 0;
+    }
+    .card-modern {
+        margin-top: 1.5em;
+        margin-bottom: 1.3em;
+    }
+}
+
+/* Uniformiser tous les boutons dans card-modern et ailleurs */
+.card-modern .btn,
+.card-modern .btn-primary,
+.card-modern .btn-danger,
+.card-modern .btn-success {
+    width: 100% !important;
+    display: block !important;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+.card-modern .btn-success {
+    padding: 8px 140px;
+}
+
+.card-modern .btn:active {
+    filter: brightness(0.92);
+}
