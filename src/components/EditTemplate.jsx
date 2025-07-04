@@ -129,7 +129,7 @@ const EditTemplate = () => {
         // Content: Add the textarea content in justified format
         doc.setFontSize(12);
         const splitText = doc.splitTextToSize(textareaContent, contentWidth); // Automatically split text into lines
-        splitText.forEach((line, index) => {
+        splitText.forEach((line) => {
             doc.text(line, leftMargin, currentY, {align: 'justify'});
             currentY += lineSpacing;
         });
@@ -168,13 +168,18 @@ const EditTemplate = () => {
                 <h5 className="mt-4">Choisissez des Templates à ajouter :</h5>
                 <div className="mb-3 d-flex flex-wrap">
                     {typeConsultationListe.map(template => (
-                        <span key={template.typeConsultationId}
-                              className={"chip-pill" + (selectedTemplates[template.typeConsultationId] ? " selected" : "")}
-                              onClick={() => handleCheckboxChange(template.typeConsultationId, template.template)}
-                              tabIndex={0}
-                              role="button"
-                              aria-pressed={!!selectedTemplates[template.typeConsultationId]}
-                        > {template.libelleConsultation}</span>
+                        <button
+                            type="button"
+                            key={template.typeConsultationId}
+                            className={
+                                "chip-pill" + (selectedTemplates[template.typeConsultationId] ? " selected" : "")
+                            }
+                            onClick={() => handleCheckboxChange(template.typeConsultationId, template.template)}
+                            aria-pressed={!!selectedTemplates[template.typeConsultationId]}
+                            style={{outline: "none"}}
+                        >
+                            {template.libelleConsultation}
+                        </button>
                     ))}
                 </div>
 
