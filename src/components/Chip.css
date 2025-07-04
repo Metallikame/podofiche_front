@@ -1,0 +1,22 @@
+.chip-pill {
+    display: inline-block;
+    border-radius: 50rem;
+    padding: 0.45rem 1.1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #376fa0;
+    background: #eaf1fa;
+    border: 1.5px solid #eaf1fa;
+    cursor: pointer;
+    margin: 0.15rem 0.4rem 0.15rem 0;
+    transition: all 0.15s;
+}
+.chip-pill.selected {
+    color: #fff;
+    background: #376fa0;
+    border: 1.5px solid #376fa0;
+    box-shadow: 0 2px 8px 0 rgba(55,111,160,0.12);
+}
+.chip-pill:active {
+    background: #295487;
+}

@@ -5,6 +5,7 @@ import axios from 'axios';
 import TemplateBlock from './TemplateBlock.jsx';
 import EditModal from './EditModal.jsx';
 import {jsPDF} from "jspdf";
+import './Chip.css';
 
 const EditTemplate = () => {
     const [typeConsultationListe, setTypeConsultationListe] = useState([]);
@@ -165,17 +166,18 @@ const EditTemplate = () => {
                 </div>
 
                 <h5 className="mt-4">Choisissez des Templates à ajouter :</h5>
-                {typeConsultationListe.map(template => (
-                    <div key={template.typeConsultationId} className="form-check">
-                        <input
-                            type="checkbox"
-                            checked={!!selectedTemplates[template.typeConsultationId]}
-                            onChange={() => handleCheckboxChange(template.typeConsultationId, template.template)}
-                            className="form-check-input"
-                        />
-                        <label className="form-check-label">{template.libelleConsultation}</label>
-                    </div>
-                ))}
+                <div className="mb-3 d-flex flex-wrap">
+                    {typeConsultationListe.map(template => (
+                        <span key={template.typeConsultationId}
+                              className={"chip-pill" + (selectedTemplates[template.typeConsultationId] ? " selected" : "")}
+                              onClick={() => handleCheckboxChange(template.typeConsultationId, template.template)}
+                              tabIndex={0}
+                              role="button"
+                              aria-pressed={!!selectedTemplates[template.typeConsultationId]}
+                        > {template.libelleConsultation}</span>
+                    ))}
+                </div>
+
                 <textarea
                     className="form-control mt-4"
                     value={textareaContent}
