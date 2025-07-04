@@ -1,10 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from "./Header.jsx";
-import {BASE_URL} from "../tools/constante";
+import { BASE_URL } from "../tools/constante";
 import axios from 'axios';
 import TemplateBlock from './TemplateBlock.jsx';
 import EditModal from './EditModal.jsx';
-import {jsPDF} from "jspdf";
+import { jsPDF } from "jspdf";
+import './Chip.css';
+import Chip from "./Chip";
+import './EditTemplateStyles.css';
 
 const EditTemplate = () => {
     const [typeConsultationListe, setTypeConsultationListe] = useState([]);
@@ -16,33 +19,12 @@ const EditTemplate = () => {
 
     useEffect(() => {
         setIsLoading(true);
-        // Fetch type consultations
         axios.get(`${BASE_URL}/api/typeconsultations`, {
-            headers: {
-                'Access-Control-Allow-Origin': 'http://localhost:3000'
-            }
+            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000' }
         })
-            .then(response => {
-                setTypeConsultationListe(response.data);
-            })
-            .catch(error => {
-                console.log(error);
-            })
+            .then(response => setTypeConsultationListe(response.data))
+            .catch(error => console.log(error))
             .finally(() => setIsLoading(false));
-
-        // Fetch patients list
-        // axios.get(`${BASE_URL}/api/patients`, {
-        //     headers: {
-        //         'Access-Control-Allow-Origin': 'http://localhost:3000'
-        //     }
-        // })
-        //     .then(response => {
-        //         setPatientsList(response.data);
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //     })
-        //     .finally(() => setIsLoading(false));
     }, []);
 
     const handleShowModal = (template) => {
@@ -68,7 +50,7 @@ const EditTemplate = () => {
 
     const handleCheckboxChange = (templateId, templateContent) => {
         setSelectedTemplates(prev => {
-            const updatedSelection = {...prev};
+            const updatedSelection = { ...prev };
             if (updatedSelection[templateId]) {
                 delete updatedSelection[templateId];
                 setTextareaContent(updateTextareaContentOnRemove(templateContent));
@@ -87,7 +69,7 @@ const EditTemplate = () => {
     const refreshData = () => {
         setIsLoading(true);
         axios.get(`${BASE_URL}/api/typeconsultations`, {
-            headers: {'Access-Control-Allow-Origin': 'http://localhost:3000'}
+            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000' }
         })
             .then(response => setTypeConsultationListe(response.data))
             .catch(error => console.log(error))
@@ -100,47 +82,38 @@ const EditTemplate = () => {
             unit: 'mm',
             format: 'a4',
         });
-
-        // Set up margins and document structure
         const leftMargin = 20;
         const rightMargin = 190;
         const contentWidth = rightMargin - leftMargin;
         const lineSpacing = 10;
 
-        // Header: Contact Info (Top Left)
         doc.setFontSize(10);
         doc.text('Dr. [Nom du Médecin]', leftMargin, 20);
         doc.text('Adresse de la clinique', leftMargin, 25);
         doc.text('Téléphone : 0123456789', leftMargin, 30);
         doc.text('Email : exemple@pied.net', leftMargin, 35);
 
-        // Header: Date and Location (Top Right)
         const today = new Date().toLocaleDateString('fr-FR', {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
         });
-        doc.text(`Orvault, le ${today}`, rightMargin, 20, {align: 'right'});
+        doc.text(`Orvault, le ${today}`, rightMargin, 20, { align: 'right' });
 
-        // Add a line break after header
         let currentY = 50;
 
-        // Content: Add the textarea content in justified format
         doc.setFontSize(12);
-        const splitText = doc.splitTextToSize(textareaContent, contentWidth); // Automatically split text into lines
-        splitText.forEach((line, index) => {
-            doc.text(line, leftMargin, currentY, {align: 'justify'});
+        const splitText = doc.splitTextToSize(textareaContent, contentWidth);
+        splitText.forEach((line) => {
+            doc.text(line, leftMargin, currentY, { align: 'justify' });
             currentY += lineSpacing;
         });
 
-        // Footer: Space for signature
-        currentY += 30; // Add some space before the signature
+        currentY += 30;
         doc.text('Signature :', leftMargin, currentY);
 
-        // Save the document with a suitable name
         doc.save('compte_rendu.pdf');
     };
-
 
     if (isLoading) {
         return <div>Loading...</div>;
@@ -148,43 +121,45 @@ const EditTemplate = () => {
 
     return (
         <div className="edit-template-page">
-            <Header/>
-            <div className="container mt-4">
-                <h1 className="text-center text-white">Éditer un Template</h1>
-                <div className="row mt-5 justify-content-between">
-                    {/* Template Block */}
-                    <TemplateBlock
-                        typeConsultationListe={typeConsultationListe}
-                        onModify={handleShowModal}
-                        refreshData={refreshData}
-                    />
-                    {/* Patient Block */}
-                    {/*<PatientBlock*/}
-                    {/*    patientsList={patientsList}*/}
-                    {/*/>*/}
-                </div>
+            <Header />
 
-                <h5 className="mt-4">Choisissez des Templates à ajouter :</h5>
-                {typeConsultationListe.map(template => (
-                    <div key={template.typeConsultationId} className="form-check">
-                        <input
-                            type="checkbox"
-                            checked={!!selectedTemplates[template.typeConsultationId]}
-                            onChange={() => handleCheckboxChange(template.typeConsultationId, template.template)}
-                            className="form-check-input"
+            <div className="main-flex-container container-fluid py-5">
+                <div className="row flex-lg-row flex-column-reverse justify-content-center align-items-stretch gx-4">
+                    {/* Card à gauche : plus de card-modern ici */}
+                    <div className="col-lg-4 d-flex align-items-start">
+                        {/* On met seulement le TemplateBlock, il gère son encadrement/card */}
+                        <TemplateBlock
+                            typeConsultationListe={typeConsultationListe}
+                            onModify={handleShowModal}
+                            refreshData={refreshData}
                         />
-                        <label className="form-check-label">{template.libelleConsultation}</label>
                     </div>
-                ))}
-                <textarea
-                    className="form-control mt-4"
-                    value={textareaContent}
-                    onChange={handleChange}
-                    rows="10"
-                />
-                <button className="btn btn-primary mt-3 mb-3" onClick={downloadPDF}>
-                    Télécharger en PDF
-                </button>
+                    {/* Zone à droite : chips + textarea format A4 */}
+                    <div className="col-lg-8 d-flex flex-column align-items-center mb-5 mb-lg-0">
+                        <h5 className="mt-2">Choisissez des Templates à ajouter :</h5>
+                        <div className="chips-row d-flex flex-wrap gap-2 mb-3 justify-content-center">
+                            {typeConsultationListe.map(template => (
+                                <Chip
+                                    key={template.typeConsultationId}
+                                    label={template.libelleConsultation}
+                                    selected={!!selectedTemplates[template.typeConsultationId]}
+                                    onClick={() => handleCheckboxChange(template.typeConsultationId, template.template)}
+                                />
+                            ))}
+                        </div>
+                        <div className="a4-preview mb-3">
+                            <textarea
+                                className="cr-textarea"
+                                value={textareaContent}
+                                onChange={handleChange}
+                                rows="3"
+                            />
+                        </div>
+                        <button className="btn btn-primary mb-4" onClick={downloadPDF}>
+                            Télécharger en PDF
+                        </button>
+                    </div>
+                </div>
             </div>
 
             {/* Modal for Editing Template */}
@@ -192,7 +167,7 @@ const EditTemplate = () => {
                 show={showModal}
                 handleClose={handleCloseModal}
                 template={selectedTemplate}
-                refreshData={refreshData}  // Passer la fonction de rafraîchissement
+                refreshData={refreshData}
             />
         </div>
     );

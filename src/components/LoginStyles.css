@@ -65,9 +65,10 @@
 }
 
 /* Add specific styles for the EditTemplate page */
+body,
 .edit-template-page {
-    background: linear-gradient(to bottom right, #75b0ca, #ffffff);
     min-height: 100vh;
+    background: linear-gradient(120deg, #c1e0fc 0%, #d6e6f2 100%);
 }
 
 .card {
@@ -81,5 +82,70 @@
 }
 
 .texte_invisible {
-    color : #212529;
+    color: #212529;
+}
+
+.modal-content {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-radius: 1.3rem !important;
+    box-shadow: 0 8px 32px 0 rgba(49, 115, 153, 0.12), 0 2px 8px 0 rgba(0, 0, 0, 0.06) !important;
+    border: none;
+    backdrop-filter: blur(6px);
+}
+
+.card-modern {
+    background: rgba(255, 255, 255, 0.86);
+    border-radius: 2.2em;
+    box-shadow: 0 4px 36px 0 rgba(49, 115, 153, 0.13), 0 2px 8px 0 rgba(0, 0, 0, 0.03);
+    padding: 2.5em 2.5em 2em 2.5em;
+    margin: 2em auto 0 auto;
+    max-width: 400px;
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: box-shadow 0.2s;
+    backdrop-filter: blur(8px);
+    border: 1.5px solid #e6f3fd;
+}
+
+@media (max-width: 600px) {
+    .card-modern {
+        padding: 1.3em 0.5em 1.2em 0.5em;
+        max-width: 96vw;
+    }
+}
+
+.card-modern h2, .card-modern h3 {
+    font-weight: bold;
+    color: #1c3b53;
+    margin-bottom: 1.3em;
+    letter-spacing: -0.01em;
+}
+
+.card-modern select,
+.card-modern input,
+.card-modern textarea {
+    border-radius: 1.2em;
+    border: 1px solid #dbeafe;
+    margin-bottom: 1em;
+    font-size: 1.08em;
+    padding: 0.65em 1.2em;
+    background: #f4fafd;
+    box-shadow: none;
+}
+
+.card-modern .btn {
+    border-radius: 1.2em;
+    font-weight: 600;
+    font-size: 1.1em;
+    margin-bottom: 1em;
+    transition: filter 0.15s;
+    width: 100%;
+    box-shadow: 0 2px 12px 0 rgba(49, 115, 153, 0.07);
+}
+
+.card-modern .btn:active {
+    filter: brightness(0.92);
 }

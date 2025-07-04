@@ -36,3 +36,18 @@
         transform: rotate(360deg);
     }
 }
+
+.bg-dark {
+    background: rgba(22, 26, 30, 0.96) !important;
+    box-shadow: none;
+}
+
+footer {
+    font-size: 1em;
+    padding: 0.7em 0;
+}
+
+header {
+    font-size: 1.25em;
+    padding: 0.75em 0.5em;
+}
