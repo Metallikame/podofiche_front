@@ -21,15 +21,18 @@
 
 .chip-btn.selected,
 .chip-btn:active {
-    background: linear-gradient(90deg, #c6e0ef 10%, #e3f2fa 90%);
-    color: #245877;
-    box-shadow: 0 4px 16px 0 rgba(49, 115, 153, 0.15);
+    /* Couleur plus contrastée et saturation renforcée */
+    background: linear-gradient(90deg, #7dc8f7 10%, #b3e0ff 90%);
+    color: #183a4d;
+    box-shadow: 0 6px 20px 0 rgba(49, 115, 153, 0.21);
+    border: 1.5px solid #37a7e7;
 }
 
 .chip-btn:hover:not(.selected) {
-    background: #eaf5fb;
+    background: #d6f1ff;
     color: #184c6a;
-    box-shadow: 0 3px 8px 0 rgba(49, 115, 153, 0.11);
+    box-shadow: 0 4px 12px 0 rgba(49, 115, 153, 0.13);
+    border: 1.5px solid #a7d4f7;
 }
 
 @media (max-width: 700px) {
