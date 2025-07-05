@@ -107,26 +107,28 @@ const TemplateBlock = ({typeConsultationListe, onModify, refreshData}) => {
             </div>
 
             {/* Suppression */}
-            <div className="mb-2 fw-semibold text-secondary">Supprimer un Template</div>
-            <select
-                className="form-select mb-3"
-                value={deleteTemplateId}
-                onChange={(e) => setDeleteTemplateId(e.target.value)}
-            >
-                <option value="">Sélectionnez un Template à supprimer</option>
-                {typeConsultationListe.map((item) => (
-                    <option key={item.typeConsultationId} value={item.typeConsultationId}>
-                        {item.libelleConsultation}
-                    </option>
-                ))}
-            </select>
-            <button
-                className="btn btn-danger w-100 btn-lg"
-                onClick={handleOpenDeleteModal}
-                disabled={!deleteTemplateId}
-            >
-                Supprimer
-            </button>
+            <div className="mb-4">
+                <div className="mb-2 fw-semibold text-secondary">Supprimer un Template</div>
+                <select
+                    className="form-select mb-3"
+                    value={deleteTemplateId}
+                    onChange={(e) => setDeleteTemplateId(e.target.value)}
+                >
+                    <option value="">Sélectionnez un Template à supprimer</option>
+                    {typeConsultationListe.map((item) => (
+                        <option key={item.typeConsultationId} value={item.typeConsultationId}>
+                            {item.libelleConsultation}
+                        </option>
+                    ))}
+                </select>
+                <button
+                    className="btn btn-danger w-100 btn-lg"
+                    onClick={handleOpenDeleteModal}
+                    disabled={!deleteTemplateId}
+                >
+                    Supprimer
+                </button>
+            </div>
 
             {/* Modale de création de template */}
             <Modal show={showCreateModal} onHide={() => setShowCreateModal(false)}>
